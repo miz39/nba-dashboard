@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <h1><span>NBA</span> Dashboard</h1>
+  <div class="subtitle">最終更新: {{ updated_at }}</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="tab-scores">試合結果</button>
+  <button class="tab-btn" data-tab="tab-standings">順位表</button>
+  <button class="tab-btn" data-tab="tab-leaders">スタッツリーダー</button>
+  <button class="tab-btn" data-tab="tab-awards">アワードレース</button>
+</nav>
+
+<main class="main">
+
+  <!-- Scores -->
+  <div id="tab-scores" class="tab-content active">
+    <h2 class="section-title">{{ score_date }} の試合結果</h2>
+    {% if games %}
+    <div class="card-grid">
+      {% for game in games %}
+      <div class="card game-card">
+        <div class="game-status {% if 'Final' in game.status %}final{% endif %}">
+          {{ game.status }}
+        </div>
+        <div class="game-teams">
+          <div class="team-row">
+            <div class="team-info">
+              <img class="team-logo"
+                   src="https://cdn.nba.com/logos/nba/{{ game.away_team_id }}/global/L/logo.svg"
+                   alt="{{ game.away_team }}"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="team-logo-fallback" style="display:none">{{ game.away_team }}</div>
+              <span class="team-name">{{ game.away_team }}</span>
+            </div>
+            <span class="team-score {% if game.away_score and game.home_score and game.away_score|int > game.home_score|int %}winner{% endif %}">
+              {{ game.away_score if game.away_score else "-" }}
+            </span>
+          </div>
+          <div class="team-row">
+            <div class="team-info">
+              <img class="team-logo"
+                   src="https://cdn.nba.com/logos/nba/{{ game.home_team_id }}/global/L/logo.svg"
+                   alt="{{ game.home_team }}"
+                   onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+              <div class="team-logo-fallback" style="display:none">{{ game.home_team }}</div>
+              <span class="team-name">{{ game.home_team }}</span>
+            </div>
+            <span class="team-score {% if game.home_score and game.away_score and game.home_score|int > game.away_score|int %}winner{% endif %}">
+              {{ game.home_score if game.home_score else "-" }}
+            </span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-data">この日の試合データはありません</div>
+    {% endif %}
+  </div>
+
+  <!-- Standings -->
+  <div id="tab-standings" class="tab-content">
+    <h2 class="section-title">カンファレンス順位表</h2>
+
+    {% for conf_name, conf_label in [("east", "イースタン・カンファレンス"), ("west", "ウェスタン・カンファレンス")] %}
+    <h3 class="conference-title">{{ conf_label }}</h3>
+    {% set teams = standings[conf_name] if standings else [] %}
+    {% if teams %}
+    <table class="standings-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>チーム</th>
+          <th class="num">勝</th>
+          <th class="num">敗</th>
+          <th class="num">勝率</th>
+          <th class="num">直近10</th>
+          <th>ストリーク</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for team in teams %}
+        <tr {% if team.conf_rank == 10 %}class="playoff-line"{% endif %}>
+          <td>{{ team.conf_rank }}</td>
+          <td>
+            <div class="team-cell">
+              <img src="https://cdn.nba.com/logos/nba/{{ team.team_id }}/global/L/logo.svg"
+                   alt="{{ team.team_abbr }}"
+                   onerror="this.style.display='none'">
+              <span>{{ team.team_name }}</span>
+            </div>
+          </td>
+          <td class="num">{{ team.wins }}</td>
+          <td class="num">{{ team.losses }}</td>
+          <td class="num">{{ "%.3f"|format(team.win_pct) }}</td>
+          <td class="num">{{ team.last_10 }}</td>
+          <td>{{ team.streak }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="no-data">順位表データを取得できませんでした</div>
+    {% endif %}
+    {% endfor %}
+  </div>
+
+  <!-- Stat Leaders -->
+  <div id="tab-leaders" class="tab-content">
+    <h2 class="section-title">スタッツリーダー</h2>
+    {% set cat_labels = {"PTS": "得点", "AST": "アシスト", "REB": "リバウンド", "BLK": "ブロック", "STL": "スティール"} %}
+    {% if stat_leaders %}
+    <div class="leaders-grid">
+      {% for cat, players in stat_leaders.items() %}
+      <div class="leader-card">
+        <h3>{{ cat_labels.get(cat, cat) }}</h3>
+        {% for p in players %}
+        <div class="leader-item">
+          <span class="rank">{{ loop.index }}</span>
+          <span class="name">{{ p.player_name }}</span>
+          <span class="team">{{ p.team_abbr }}</span>
+          <span class="value">{{ p.value }}</span>
+        </div>
+        {% endfor %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="no-data">リーダーデータを取得できませんでした</div>
+    {% endif %}
+  </div>
+
+  <!-- Award Races -->
+  <div id="tab-awards" class="tab-content">
+    <h2 class="section-title">アワードレース（スタッツベース）</h2>
+
+    {% if award_races and award_races.mvp %}
+    <h3 class="award-title">MVP</h3>
+    <table class="award-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>選手</th>
+          <th>チーム</th>
+          <th class="num">PTS</th>
+          <th class="num">AST</th>
+          <th class="num">REB</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in award_races.mvp %}
+        <tr>
+          <td>{{ p.rank }}</td>
+          <td>{{ p.player_name }}</td>
+          <td>{{ p.team_abbr }}</td>
+          <td class="num">{{ p.pts }}</td>
+          <td class="num">{{ p.ast }}</td>
+          <td class="num">{{ p.reb }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+
+    {% if award_races and award_races.dpoy %}
+    <h3 class="award-title">DPOY（最優秀守備選手）</h3>
+    <table class="award-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>選手</th>
+          <th>チーム</th>
+          <th class="num">BLK</th>
+          <th class="num">STL</th>
+          <th class="num">REB</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in award_races.dpoy %}
+        <tr>
+          <td>{{ p.rank }}</td>
+          <td>{{ p.player_name }}</td>
+          <td>{{ p.team_abbr }}</td>
+          <td class="num">{{ p.blk }}</td>
+          <td class="num">{{ p.stl }}</td>
+          <td class="num">{{ p.reb }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="no-data">アワードデータを取得できませんでした</div>
+    {% endif %}
+  </div>
+
+</main>
+
+<footer class="footer">
+  NBA Dashboard — データは NBA.com API より取得 — 自動更新
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
