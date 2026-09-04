@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+  <h1><span>NBA</span> Dashboard</h1>
+  <div class="subtitle">最終更新: 2026-09-04 23:36</div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="tab-scores">試合結果</button>
+  <button class="tab-btn" data-tab="tab-standings">順位表</button>
+  <button class="tab-btn" data-tab="tab-leaders">スタッツリーダー</button>
+  <button class="tab-btn" data-tab="tab-awards">アワードレース</button>
+</nav>
+
+<main class="main">
+
+  <!-- Scores -->
+  <div id="tab-scores" class="tab-content active">
+    <h2 class="section-title"> の試合結果</h2>
+    
+    <div class="no-data">この日の試合データはありません</div>
+    
+  </div>
+
+  <!-- Standings -->
+  <div id="tab-standings" class="tab-content">
+    <h2 class="section-title">カンファレンス順位表</h2>
+
+    
+    <h3 class="conference-title">イースタン・カンファレンス</h3>
+    
+    
+    <div class="no-data">順位表データを取得できませんでした</div>
+    
+    
+    <h3 class="conference-title">ウェスタン・カンファレンス</h3>
+    
+    
+    <div class="no-data">順位表データを取得できませんでした</div>
+    
+    
+  </div>
+
+  <!-- Stat Leaders -->
+  <div id="tab-leaders" class="tab-content">
+    <h2 class="section-title">スタッツリーダー</h2>
+    
+    
+    <div class="leaders-grid">
+      
+      <div class="leader-card">
+        <h3>得点</h3>
+        
+        <div class="leader-item">
+          <span class="rank">1</span>
+          <span class="name">Luka Dončić</span>
+          <span class="team">LAL</span>
+          <span class="value">33.5</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">2</span>
+          <span class="name">Shai Gilgeous-Alexander</span>
+          <span class="team">OKC</span>
+          <span class="value">31.1</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">3</span>
+          <span class="name">Anthony Edwards</span>
+          <span class="team">MIN</span>
+          <span class="value">28.8</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">4</span>
+          <span class="name">Jaylen Brown</span>
+          <span class="team">BOS</span>
+          <span class="value">28.7</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">5</span>
+          <span class="name">Tyrese Maxey</span>
+          <span class="team">PHI</span>
+          <span class="value">28.3</span>
+        </div>
+        
+      </div>
+      
+      <div class="leader-card">
+        <h3>アシスト</h3>
+        
+        <div class="leader-item">
+          <span class="rank">1</span>
+          <span class="name">Nikola Jokić</span>
+          <span class="team">DEN</span>
+          <span class="value">10.7</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">2</span>
+          <span class="name">Cade Cunningham</span>
+          <span class="team">DET</span>
+          <span class="value">9.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">3</span>
+          <span class="name">Luka Dončić</span>
+          <span class="team">LAL</span>
+          <span class="value">8.3</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">4</span>
+          <span class="name">James Harden</span>
+          <span class="team">CLE</span>
+          <span class="value">8.0</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">5</span>
+          <span class="name">Jalen Johnson</span>
+          <span class="team">ATL</span>
+          <span class="value">7.9</span>
+        </div>
+        
+      </div>
+      
+      <div class="leader-card">
+        <h3>リバウンド</h3>
+        
+        <div class="leader-item">
+          <span class="rank">1</span>
+          <span class="name">Nikola Jokić</span>
+          <span class="team">DEN</span>
+          <span class="value">12.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">2</span>
+          <span class="name">Karl-Anthony Towns</span>
+          <span class="team">NYK</span>
+          <span class="value">11.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">3</span>
+          <span class="name">Donovan Clingan</span>
+          <span class="team">POR</span>
+          <span class="value">11.6</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">4</span>
+          <span class="name">Victor Wembanyama</span>
+          <span class="team">SAS</span>
+          <span class="value">11.5</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">5</span>
+          <span class="name">Rudy Gobert</span>
+          <span class="team">MIN</span>
+          <span class="value">11.5</span>
+        </div>
+        
+      </div>
+      
+      <div class="leader-card">
+        <h3>ブロック</h3>
+        
+        <div class="leader-item">
+          <span class="rank">1</span>
+          <span class="name">Victor Wembanyama</span>
+          <span class="team">SAS</span>
+          <span class="value">3.1</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">2</span>
+          <span class="name">Chet Holmgren</span>
+          <span class="team">OKC</span>
+          <span class="value">1.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">3</span>
+          <span class="name">Jay Huff</span>
+          <span class="team">IND</span>
+          <span class="value">1.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">4</span>
+          <span class="name">Evan Mobley</span>
+          <span class="team">CLE</span>
+          <span class="value">1.7</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">5</span>
+          <span class="name">Donovan Clingan</span>
+          <span class="team">POR</span>
+          <span class="value">1.7</span>
+        </div>
+        
+      </div>
+      
+      <div class="leader-card">
+        <h3>スティール</h3>
+        
+        <div class="leader-item">
+          <span class="rank">1</span>
+          <span class="name">Dyson Daniels</span>
+          <span class="team">ATL</span>
+          <span class="value">2.0</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">2</span>
+          <span class="name">Ausar Thompson</span>
+          <span class="team">DET</span>
+          <span class="value">2.0</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">3</span>
+          <span class="name">Tyrese Maxey</span>
+          <span class="team">PHI</span>
+          <span class="value">1.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">4</span>
+          <span class="name">Kawhi Leonard</span>
+          <span class="team">LAC</span>
+          <span class="value">1.9</span>
+        </div>
+        
+        <div class="leader-item">
+          <span class="rank">5</span>
+          <span class="name">Cason Wallace</span>
+          <span class="team">OKC</span>
+          <span class="value">1.9</span>
+        </div>
+        
+      </div>
+      
+    </div>
+    
+  </div>
+
+  <!-- Award Races -->
+  <div id="tab-awards" class="tab-content">
+    <h2 class="section-title">アワードレース（スタッツベース）</h2>
+
+    
+    <h3 class="award-title">MVP</h3>
+    <table class="award-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>選手</th>
+          <th>チーム</th>
+          <th class="num">PTS</th>
+          <th class="num">AST</th>
+          <th class="num">REB</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td>Nikola Jokić</td>
+          <td>DEN</td>
+          <td class="num">27.7</td>
+          <td class="num">10.7</td>
+          <td class="num">12.9</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Luka Dončić</td>
+          <td>LAL</td>
+          <td class="num">33.5</td>
+          <td class="num">8.3</td>
+          <td class="num">7.7</td>
+        </tr>
+        
+        <tr>
+          <td>3</td>
+          <td>Shai Gilgeous-Alexander</td>
+          <td>OKC</td>
+          <td class="num">31.1</td>
+          <td class="num">6.6</td>
+          <td class="num">4.3</td>
+        </tr>
+        
+        <tr>
+          <td>4</td>
+          <td>Jalen Johnson</td>
+          <td>ATL</td>
+          <td class="num">22.5</td>
+          <td class="num">7.9</td>
+          <td class="num">10.3</td>
+        </tr>
+        
+        <tr>
+          <td>5</td>
+          <td>Victor Wembanyama</td>
+          <td>SAS</td>
+          <td class="num">25.0</td>
+          <td class="num">3.1</td>
+          <td class="num">11.5</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+
+    
+    <h3 class="award-title">DPOY（最優秀守備選手）</h3>
+    <table class="award-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>選手</th>
+          <th>チーム</th>
+          <th class="num">BLK</th>
+          <th class="num">STL</th>
+          <th class="num">REB</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        <tr>
+          <td>1</td>
+          <td>Victor Wembanyama</td>
+          <td>SAS</td>
+          <td class="num">3.1</td>
+          <td class="num">1.0</td>
+          <td class="num">11.5</td>
+        </tr>
+        
+        <tr>
+          <td>2</td>
+          <td>Nikola Jokić</td>
+          <td>DEN</td>
+          <td class="num">0.8</td>
+          <td class="num">1.4</td>
+          <td class="num">12.9</td>
+        </tr>
+        
+        <tr>
+          <td>3</td>
+          <td>Rudy Gobert</td>
+          <td>MIN</td>
+          <td class="num">1.6</td>
+          <td class="num">0.8</td>
+          <td class="num">11.5</td>
+        </tr>
+        
+        <tr>
+          <td>4</td>
+          <td>Donovan Clingan</td>
+          <td>POR</td>
+          <td class="num">1.7</td>
+          <td class="num">0.6</td>
+          <td class="num">11.6</td>
+        </tr>
+        
+        <tr>
+          <td>5</td>
+          <td>Chet Holmgren</td>
+          <td>OKC</td>
+          <td class="num">1.9</td>
+          <td class="num">0.6</td>
+          <td class="num">8.9</td>
+        </tr>
+        
+      </tbody>
+    </table>
+    
+  </div>
+
+</main>
+
+<footer class="footer">
+  NBA Dashboard — データは NBA.com API より取得 — 自動更新
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
